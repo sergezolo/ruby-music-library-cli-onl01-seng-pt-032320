@@ -7,6 +7,7 @@ class Genre
   def initialize(name)
     @name = name
     @songs = []
+    save
   end
   
   def self.all
@@ -25,6 +26,19 @@ class Genre
     self.new(name).tap do |genre|
       genre.save
     end
+  end
+  
+  def songs
+    @songs
+  end
+  
+  def add_song(song)
+    song.genre = self unless song.genre == self
+    @songs << song unless @songs.inlude?(song)
+  end
+  
+  def artists
+    @songs.collect{|song| song.artist}.uniq
   end
 
 end
