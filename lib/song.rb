@@ -14,7 +14,11 @@ class Song
     @@all
   end
   
+<<<<<<< HEAD
   def self.destroy_all
+=======
+  def self.desstroy_all
+>>>>>>> fe5ffc1e0649b64c185134fa3e23af2248e5194d
     @@all.clear
   end
   
@@ -28,9 +32,12 @@ class Song
     end
   end
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> fe5ffc1e0649b64c185134fa3e23af2248e5194d
   def self.new_from_filename(file_name)
     file_bits = file_name.gsub(/(\.mp3)/,'')
     file_bits = file_bits.split(" - ")
