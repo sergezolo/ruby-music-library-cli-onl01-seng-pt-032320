@@ -13,12 +13,8 @@ class Song
   def self.all
     @@all
   end
-  
-<<<<<<< HEAD
-  def self.destroy_all
-=======
+
   def self.desstroy_all
->>>>>>> fe5ffc1e0649b64c185134fa3e23af2248e5194d
     @@all.clear
   end
   
@@ -31,41 +27,27 @@ class Song
       song.save
     end
   end
+  
+  def self.find_by_name(name)
+    self.all.find {|song| song.name == name}
+  end
+  
+  def self.find_or_create_by_name(name)
+    self.find_by_name(name) || self.create(name)
+  end
+  
+  def self.create_from_filename(name)
+    @@all << self.new_from_filename(name)
+  end
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> fe5ffc1e0649b64c185134fa3e23af2248e5194d
-  def self.new_from_filename(file_name)
-    file_bits = file_name.gsub(/(\.mp3)/,'')
-    file_bits = file_bits.split(" - ")
-    artist = Artist.find_or_create_by_name(file_bits[0])
-    genre = Genre.find_or_create_by_name(file_bits[2])
-    song = Song.find_or_create_by_name(file_bits[1])
-    song.genre = genre
-    song.artist = artist
+  def self.new_from_filename(name)
+    song_name = name.split(" - ")[1]
+    artist_name = name.split(" - ")[0]
+    genre_name = name.split(" - ")[2].chomp(".mp3")
+    song = self.find_or_create_by_name(song_name)
+    song.artist = Artist.find_or_create_by_name(artist_name)
+    song.genre = Genre.find_or_create_by_name(genre_name)
     song
-  end
-
-  def self.create_from_filename(file_name)
-    file = Song.new_from_filename(file_name)
-    file.save
-    file
-  end
-
-  def self.find_by_name(song_name)
-    self.all.find {|song|song.name == song_name}
-  end
-
-  def self.find_or_create_by_name(song_name)
-    song = self.find_by_name(song_name)
-    if song == nil
-      self.create(song_name)
-    else
-      song
-    end
   end
 
 end
