@@ -1,6 +1,7 @@
 class Song
 
-  attr_accessor :name, :artist, :genre
+  attr_accessor :name
+  attr_reader :artist, :genre
   
   @@all = []
 
@@ -14,7 +15,7 @@ class Song
     @@all
   end
 
-  def self.desstroy_all
+  def self.destroy_all
     @@all.clear
   end
   
@@ -34,6 +35,16 @@ class Song
   
   def self.find_or_create_by_name(name)
     self.find_by_name(name) || self.create(name)
+  end
+  
+  def artist=(artist)
+    @artist = artist
+    self.artist.add_song(self)
+  end
+  
+  def genre=(genre)
+    @genre = genre
+    self.genre.add_song(self)
   end
   
   def self.create_from_filename(name)
